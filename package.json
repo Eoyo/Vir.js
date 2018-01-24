@@ -1,0 +1,59 @@
+{
+  "_from": "vir.js",
+  "_id": "vir.js@1.0.12",
+  "_inBundle": false,
+  "_integrity": "sha512-XdrXPTeh/YEKUlT/5Ji6nBaJua2mI60FYlxy2kthOcEzXucap9lVsLFN5qLMozckt+i2mdBq7Z1PMQa9K2oR7g==",
+  "_location": "/vir.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "vir.js",
+    "name": "vir.js",
+    "escapedName": "vir.js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vir.js/-/vir.js-1.0.12.tgz",
+  "_shasum": "02d8eb450412b4e0a0f3d383f680fc5eac896cc8",
+  "_spec": "vir.js",
+  "_where": "/home/lium/Desktop/express",
+  "author": {
+    "name": "liumiao"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@types/jquery": "^3.2.17",
+    "install": "^0.10.2",
+    "jquery": "^3.2.1"
+  },
+  "deprecated": false,
+  "description": "help you build html dom in js, help you manage your Code",
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.1",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.6.2"
+  },
+  "keywords": [
+    "typescript",
+    "vir",
+    "dom",
+    "framwork",
+    "js create dom",
+    "full stack",
+    "use jquery"
+  ],
+  "license": "ISC",
+  "main": "dist/vir.js",
+  "name": "vir.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "types": "./src/index.ts",
+  "version": "1.0.12"
+}
