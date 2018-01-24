@@ -1,6 +1,6 @@
 # 此处为vir.js的新版本(1.0.*)
 ## I' am sorry for that there is no English Version, because this is a stupid project.
-## 这次我将核心的功能抽离出来了, 核心的内容比旧版的少了许多, 也更灵活了.
+## 这次我将核心的功能抽离出来了, 核心的内容比旧版的少了许多, 也更灵活了.
 > 旧版的可以看看这里: https://github.com/Eoyo/express/tree/master/public/Vir
 
 > 欢迎来welcome : QQ: 2119258591 
@@ -10,7 +10,7 @@
 ### 1. 安装:
 ```npm install vir.js```
 
-使用[typescript](https://www.tslang.cn/docs/home.html)编写的, 自带类型声明的
+使用[typescript](https://www.tslang.cn/docs/home.html)编写的, 自带类型声明的
 
 ### 2. 导入 (typescript/ ES6)
 ```import { Vir } from 'vir.js'```
@@ -21,7 +21,7 @@
   1. 浏览器导入 ```<script src="node_models/vir.js/dist/vir.js"></script>```
   2. node.js 的 require,  ```const Vir = require('vir.js').Vir```
 
-## 二. 简单的使用例子:
+## 二. 简单的使用例子:
 
 ### 1. 显示四个盒子(`className = "box"`), 每个盒子一个big apple: 
 
@@ -42,7 +42,7 @@ Vir({
   '.box' : [
     { '.apple': 'Big Apple' },
     { '.apple': 'Big Apple' },
-    { '.apple': 'Big Apple' },
+    { '.apple': 'Big Apple' },
     { '.apple': 'Big Apple' }
   ]
 })
@@ -53,7 +53,7 @@ Vir({
   '4; .box' : [
     { '.apple': 'Big Apple' },
     { '.apple': 'Big Apple' },
-    { '.apple': 'Big Apple' },
+    { '.apple': 'Big Apple' },
     { '.apple': 'Big Apple' }
   ]
 })
@@ -85,9 +85,9 @@ Vir({
   "img .bigImage": data.map(toArgsSrc)
 })
 
-// 如果又不是img了
+// 如果又不是img了
 Vir({
-  "video .playingBackground": data.map(toArgsSrc)
+  "video .playingBackground": data.map(toArgsSrc)
 }) // 逻辑逻辑完美的复用
 ```
 
@@ -159,7 +159,7 @@ Vir({
   ]
 })
 
-// 说白了就是有个函数节点, 看看如下, 详细见语法篇
+// 说白了就是有个函数节点, 看看如下, 详细见语法篇
 Vir({
   '.model'(ele) {
     ele.innerHTML = 'abc'
@@ -168,7 +168,7 @@ Vir({
 ```
 
 
-## 三.  vir.js 的优势
+## 三.  vir.js 的优势
 1. 定位清晰: 就是用js创建dom的.
 2. 无其他依赖: 目前发布的vir.js 才800来行, 源码都可以一口气看完..
 3. 有潜力: 这是一个极简先驱版本, 我还开发了许多vir.js的工具, vir.js不久将会上升到framework的高度
@@ -253,8 +253,8 @@ test.args.threeChild.forEach((v)=>{
 
 ### 7. 特殊的属性: $, on, style, args, data
 
-其实上面有许多的例子使用了特殊的属性了, 特殊属性主要是为了方便操作dom的. 其他的都很简单的, 就$牛逼点: $ 是innerHTML, 但也可以是数组.
-
+其实上面有许多的例子使用了特殊的属性了, 特殊属性主要是为了方便操作dom的. 其他的都很简单的, 就$牛逼点: $ 是innerHTML, 但也可以是数组.
+
 1. on 绑定事件的地方. on为函数时自定义把绑定, `'div .test':{ on(ele){ /* do what you want */ } }` , ele 为HTMLELement; 
 2. style 绑定样式的地方
 3. args 绑定生成的HTMLELement的属性如className, 或自定义: 如key; (index 被Vir.js用了!)
@@ -263,7 +263,7 @@ test.args.threeChild.forEach((v)=>{
 
 ### 8. **分述**、**复述**和**自适应数组**
 
-数组的自动解析是本框架的一大特色, 很多框架都是要用类似于for于语句去声明. 但是我这里不需要的. 为了使用时使得结果符合预期, 请大家注意一下几点: 
+数组的自动解析是本框架的一大特色, 很多框架都是要用类似于for于语句去声明. 但是我这里不需要的. 为了使用时使得结果符合预期, 请大家注意一下几点: 
 
 #### 8.1 数组中合法的类型: 
 
@@ -272,13 +272,13 @@ Vir({
   '.array > .item' : [
     'string'
     , true
-    , 123  //primitive转字符串显示
+    , 123  //primitive转字符串显示
 
     , {  // object 当做新的vir节点解析
       '#obj' : 'object'
     }
     , (ele) => {  // 调用函数处理, 唯一入口是框架生成的HTMLElememt
-      ele.innerHTML = 'function'
+      ele.innerHTML = 'function'
     }
     , null  // 结果不显示
     , undefined  // 显示出undefined
@@ -358,14 +358,14 @@ Vir({
 // 属性名只能唯一, 使用带注释的属性名. 我觉的这个不仅能解决问题还解决的不错.
 ```
 
-## 五. 来自Vir.js 开发的其他东西, (可以在vir.js 的 1.0.7 及以上使用)
+## 五. 来自Vir.js 开发的其他东西, (可以在vir.js 的 1.0.7 及以上使用)
 
 主要有: 1. EventPool, 事件的处理池;
 接下来:(before 2018 1-15): 2. State 3. ApiManager
 
-#### 1. EventPool 事件处理池
+#### 1. EventPool 事件处理池
 
-生成的是一个eventpool 对象, 使用这个对象管理事件的触发和监听;
+生成的是一个eventpool 对象, 使用这个对象管理事件的触发和监听;
 
 1. 超简单而直接的example: 触发'say', 1秒后alert 一个 'hello'
 ```js
@@ -423,11 +423,11 @@ ev.listenAll('done',(ok)=>{
 
 Promise不会有这种问题, Promise 有状态记录, 无论在哪then 都可以. 
 
-4. done, after 的事件模型(内存的消耗多了点, 不要用太多就ok)
+4. done, after 的事件模型(内存的消耗多了点, 不要用太多就ok)
 
     Promise 是一个稳定的开关, 状态只会改变一次.
     
-    一个Promise后的then 里的函数只会执行一次; 不利于事件常常触发的场景(也可以使用, 只是有点蹩脚)
+    一个Promise后的then 里的函数只会执行一次; 不利于事件常常触发的场景(也可以使用, 只是有点蹩脚)
 
 > done, after继承了Promise 的优点, 无论何时done , after总是可以触发;
 ```js
@@ -453,8 +453,8 @@ function listen(str){
 }
 listen('A');
 
-// 改变主意了, 想让'done' 后alert'B'了, 
-listen('B'); // 这是错误的, 之前监听'A'的没删掉; 
+// 改变主意了, 想让'done' 后alert'B'了, 
+listen('B'); // 这是错误的, 之前监听'A'的没删掉; 
 
 ```
 
@@ -475,10 +475,10 @@ listen('B'); // ok, 之前监听'A'的删掉了;
 
 ```
 
-注意啦: `ev.listen` 是根据`function.name`来判断的. 如果`function.name`是listen过的, 就用新的替代旧的. 所以ev.listen 是不喜欢只用匿名的函数的.(匿名函数的name 为空字符串)
+注意啦: `ev.listen` 是根据`function.name`来判断的. 如果`function.name`是listen过的, 就用新的替代旧的. 所以ev.listen 是不喜欢只用匿名的函数的.(匿名函数的name 为空字符串)
 
   6. EventPool只是个小工具, 力推一波: Sage; 集中管理异步
 
 ...
 
-#### 2. ApiManager: 集中的控制ajax的, vir.js 的第二个核心, 大约 1月30日推出
+#### 2. ApiManager: 集中的控制ajax的, vir.js 的第二个核心, 大约 1月30日推出
