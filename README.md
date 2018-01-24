@@ -3,11 +3,11 @@
 ## 这次我将核心的功能抽离出来了, 核心的内容比旧版的少了许多, 也更灵活了.
 > 旧版的可以看看这里: https://github.com/Eoyo/express/tree/master/public/Vir
 
-> 欢迎来welcome  : QQ: 2119258591 
+> 欢迎来welcome : QQ: 2119258591 
 
-## vir.js 的核心: js Dom 树的解析
+## vir.js 的核心: js Dom 树的解析
 ## 一. 用法
-### 1. 安装:
+### 1. 安装:
 ```npm install vir.js```
 
 使用[typescript](https://www.tslang.cn/docs/home.html)编写的, 自带类型声明的
@@ -23,7 +23,7 @@
 
 ## 二. 简单的使用例子:
 
-### 1. 显示四个盒子(`className = "box"`), 每个盒子一个big apple: 
+### 1. 显示四个盒子(`className = "box"`), 每个盒子一个big apple: 
 
 写法1: 
 
@@ -35,10 +35,10 @@ Vir({
 })
 ``` 
 
-写法2: 使用vir.js'原生的'数组自适应, 让你可以控制单个的内容
-
+写法2: 使用vir.js'原生的'数组自适应, 让你可以控制单个的内容
+
 ```js
-Vir({
+Vir({
   '.box' : [
     { '.apple': 'Big Apple' },
     { '.apple': 'Big Apple' },
@@ -65,13 +65,13 @@ import R = require('ramda')
 Vir({
   '.box' : R.map(
     (e)=>({ '.apple': e }), 
-    R.repeat('Big Apple', 4)
+    R.repeat('Big Apple', 4)
   )
 })
 ```
 > 强行安利一波函数式编程: ( 2018-01-15)
 
-案例1: 根据URL数组,生成一组图片:
+案例1: 根据URL数组,生成一组图片:
 
 ```js
 const data = ['','','']
@@ -88,10 +88,10 @@ Vir({
 // 如果又不是img了
 Vir({
   "video .playingBackground": data.map(toArgsSrc)
-}) // 逻辑逻辑完美的复用
+}) // 逻辑逻辑完美的复用
 ```
 
-案例2: 还是根据URL数组,生成一组图片, 但是每个图片的样式一样(假设你就是想用js设置样式)
+案例2: 还是根据URL数组,生成一组图片, 但是每个图片的样式一样(假设你就是想用js设置样式)
 
 ```js
 Vir(this.ele, {
@@ -116,15 +116,15 @@ Vir(this.ele, {
 ```js
 // use typescript
 // modelOne
-import { Vir } from 'vir.js';
+import { Vir } from 'vir.js';
 import * as $ from 'jquery';
 
 function One (ele : HTMLElement) {
-  const sayWords = 'I\'am model one'
+  const sayWords = 'I\'am model one'
 
   Vir(ele, {
     '.say': sayWords
-    , on: { // 绑定个事件也可以
+    , on: { // 绑定个事件也可以
       click() {
         alert(sayWords)
       }
@@ -170,8 +170,8 @@ Vir({
 
 ## 三.  vir.js 的优势
 1. 定位清晰: 就是用js创建dom的.
-2. 无其他依赖: 目前发布的vir.js 才800来行, 源码都可以一口气看完..
-3. 有潜力: 这是一个极简先驱版本, 我还开发了许多vir.js的工具, vir.js不久将会上升到framework的高度
+2. 无其他依赖: 目前发布的vir.js 才800来行, 源码都可以一口气看完..
+3. 有潜力: 这是一个极简先驱版本, 我还开发了许多vir.js的工具, vir.js不久将会上升到framework的高度
 4. 完全用js 开发的: 实现在前后端同时跑也是可以的;
 5. 使用方便: 有强大的数组使用方法;
 
@@ -255,11 +255,11 @@ test.args.threeChild.forEach((v)=>{
 
 其实上面有许多的例子使用了特殊的属性了, 特殊属性主要是为了方便操作dom的. 其他的都很简单的, 就$牛逼点: $ 是innerHTML, 但也可以是数组.
 
-1. on 绑定事件的地方. on为函数时自定义把绑定, `'div .test':{ on(ele){ /* do what you want */ } }` , ele 为HTMLELement; 
+1. on 绑定事件的地方. on为函数时自定义把绑定, `'div .test':{ on(ele){ /* do what you want */ } }` , ele 为HTMLELement; 
 2. style 绑定样式的地方
 3. args 绑定生成的HTMLELement的属性如className, 或自定义: 如key; (index 被Vir.js用了!)
-4. data 绑定到dataSet上, 原生dom的安全数据接口, 优点是css里可以访问到(绝对黑科技!),
-5. $ 显式的绑定innerHTML 或者使用数组, 就这两种情况
+4. data 绑定到dataSet上, 原生dom的安全数据接口, 优点是css里可以访问到(绝对黑科技!),
+5. $ 显式的绑定innerHTML 或者使用数组, 就这两种情况
 
 ### 8. **分述**、**复述**和**自适应数组**
 
@@ -288,8 +288,8 @@ Vir({
 
 > 注意: 
 > 1. 不支持Symbol类型用在数组里
-> 2. null 和 undefined: null不显示, undefined会被渲染成字符串'undefined';
-> 3. 尾部的`.item`没有声明数量和声明的数量为1, 则`.item` 的数量为其后数组的长度. 若是声明的数量大于1,  则溢出的会忽略, 不足的为'undefined'
+> 2. null 和 undefined: null不显示, undefined会被渲染成字符串'undefined';
+> 3. 尾部的`.item`没有声明数量和声明的数量为1, 则`.item` 的数量为其后数组的长度. 若是声明的数量大于1,  则溢出的会忽略, 不足的为'undefined'
 
 #### 8.2 **分述**、**复述**
 >js代码为:
@@ -318,23 +318,23 @@ Vir({
 </div>
 
 <!-- 复述 -->
-<div> 
+<div> 
     <div title = "son">son</div>
     <div title = "son">son</div>
     <div title = "son">son</div>
 </div>
 ```
-> ps: 复述, 我觉的就生成个棋盘啥的有用了...
+> ps: 复述, 我觉的就生成个棋盘啥的有用了...
 
 ### 8.3 在特殊的属性$中使用数组
 
-其实和直接写在节点尾部是一样的, 只是使用$写, 可以写额外的style, on 等等
+其实和直接写在节点尾部是一样的, 只是使用$写, 可以写额外的style, on 等等
 
 > 实现点击blue弹出blue, 点击red弹出red
 
 ```js
 Vir ({
-  'span .color': {
+  'span .color': {
     $: ['red', 'blue']
     , on: {
       click() {
@@ -347,12 +347,12 @@ Vir ({
 
 ### 9. 属性的注释
 
-js 对象里同级的属性名是唯一的, 虽然8.* 中可以通过数组批量的生成节点, 但是数组不适用所有的情况. (写文章的话, 不要用vir.js , vir.js 是用来开发应用的, 推荐: MarkDown;)
+js 对象里同级的属性名是唯一的, 虽然8.* 中可以通过数组批量的生成节点, 但是数组不适用所有的情况. (写文章的话, 不要用vir.js , vir.js 是用来开发应用的, 推荐: MarkDown;)
 
 使用`';' + ' '` , 即`分号 + 空格`,  放在属性的开头, 表示注释;
 ```js
 Vir({
-  'h2': "头"
+  'h2': "头"
   , "english; h2" : "head"
 })
 // 属性名只能唯一, 使用带注释的属性名. 我觉的这个不仅能解决问题还解决的不错.
@@ -361,22 +361,22 @@ Vir({
 ## 五. 来自Vir.js 开发的其他东西, (可以在vir.js 的 1.0.7 及以上使用)
 
 主要有: 1. EventPool, 事件的处理池;
-接下来:(before 2018 1-15): 2. State 3. ApiManager
+接下来:(before 2018 1-15): 2. State 3. ApiManager
 
 #### 1. EventPool 事件处理池
 
 生成的是一个eventpool 对象, 使用这个对象管理事件的触发和监听;
 
-1. 超简单而直接的example: 触发'say', 1秒后alert 一个 'hello'
+1. 超简单而直接的example: 触发'say', 1秒后alert 一个 'hello'
 ```js
-import { EventPool } from 'vir.js';
+import { EventPool } from 'vir.js';
 const ev = new EventPool();
 
 ev.listen('say', (data)=> {
   alert(data)
 })
 
-function say () {
+function say () {
   ev.emit('say', 'hello')
 }
 
@@ -386,11 +386,11 @@ setTimeout(say, 1000)
 
 2. EventPool实现的是基于事件名的异步解耦合,  来个高级的例子:
 
-场景: 有一个任务流程: A -> B -> C, 运行到B时需要满足一定的条件才可以继续 运行到C. 如何在外部去控制B 的状态呢??
-通俗的说: 问题是指如何传个开关给函数, 外边的人拿着这个开关控制这个函数的运行? 如何搞出这个开关?
+场景: 有一个任务流程: A -> B -> C, 运行到B时需要满足一定的条件才可以继续 运行到C. 如何在外部去控制B 的状态呢??
+通俗的说: 问题是指如何传个开关给函数, 外边的人拿着这个开关控制这个函数的运行? 如何搞出这个开关?
 ```js
 
-import { EventPool } from 'vir.js';
+import { EventPool } from 'vir.js';
 // A -> B -> C;
 function job(B: Promise) {
   // do A 
@@ -400,18 +400,18 @@ function job(B: Promise) {
 }
 const ev = new EventPool();
 
-// set B, B is a Promise object
+// set B, B is a Promise object
 job(ev.listen('done')) // ev.listen('EveCode') , 单参数,返回的Promise 对象.
 
 ev.emit('done', 'B is ok!')
 
 ```
 
-3. Promise的优点
+3. Promise的优点
 
 普通的事件处理有时会有意外
 
-> 例如: 先触发了事件, listen晚了, 导致最后一次的触发没监听到.
+> 例如: 先触发了事件, listen晚了, 导致最后一次的触发没监听到.
 ```js
 // 这里只是一种简洁的写法, 实际可能更复杂!
 ev.emit('done', 'ok')
@@ -421,7 +421,7 @@ ev.listenAll('done',(ok)=>{
 })
 ```
 
-Promise不会有这种问题, Promise 有状态记录, 无论在哪then 都可以. 
+Promise不会有这种问题, Promise 有状态记录, 无论在哪then 都可以. 
 
 4. done, after 的事件模型(内存的消耗多了点, 不要用太多就ok)
 
@@ -435,7 +435,7 @@ ev.done('done','ok');
 ev.after('done', (ok)=>{
   console.log(ok)
 })
-// after 成功的接受到了done事件; after 在done 后立即触发, after 保证了顺序.
+// after 成功的接受到了done事件; after 在done 后立即触发, after 保证了顺序.
 // done 的事件也可以被listen监听;
 ```
 5. 意外的监听过多
@@ -458,7 +458,7 @@ listen('B'); // 这是错误的, 之前监听'A'的没删掉;
 
 ```
 
->其实名字就已经强调了, `listenAll` 会监听所有的回调, 要想自动的删除之前的可以用`listen`, 如下:
+>其实名字就已经强调了, `listenAll` 会监听所有的回调, 要想自动的删除之前的可以用`listen`, 如下:
 
 ```js
 ev.emit('done', 'ok')
@@ -470,15 +470,15 @@ function listen(str){
 }
 listen('A');
 
-// 改变主意了, 想让'done' 后alert'B'了, 
-listen('B'); // ok, 之前监听'A'的删掉了; 
+// 改变主意了, 想让'done' 后alert'B'了, 
+listen('B'); // ok, 之前监听'A'的删掉了; 
 
 ```
-
+
 注意啦: `ev.listen` 是根据`function.name`来判断的. 如果`function.name`是listen过的, 就用新的替代旧的. 所以ev.listen 是不喜欢只用匿名的函数的.(匿名函数的name 为空字符串)
 
-  6. EventPool只是个小工具, 力推一波: Sage; 集中管理异步
+  6. EventPool只是个小工具, 力推一波: Sage; 集中管理异步
 
 ...
 
-#### 2. ApiManager: 集中的控制ajax的, vir.js 的第二个核心, 大约 1月30日推出
+#### 2. ApiManager: 集中的控制ajax的, vir.js 的第二个核心, 大约 1月30日推出
