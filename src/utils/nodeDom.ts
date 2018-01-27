@@ -2,30 +2,38 @@ class quickJsDom {
     nodeName = 'div'
     childrenlist = []
     attribute = {}
-    childrenStr = '';
+    parentElement: quickJsDom
+    id = ''
+    className = ''
     constructor (name) {
         this.nodeName = name;
     }
-    appendChild(jsDomInstance) {
+    appendChild(jsDomInstance:quickJsDom) {
         this.childrenlist.push(jsDomInstance)
-        this.childrenStr += jsDomInstance.outerHTML;
+        jsDomInstance.parentElement = this;
     }
     setAttribute(strName, value) {
         this.attribute[strName] = value;
     }
     get outerHTML () {
-        let childrenStr = ''
         let atttributeStr = ''
         for (const x in this.attribute) {
             atttributeStr += ` ${x}="${this.attribute[x]}"`
         }
-        return `<${this.nodeName}${atttributeStr}>${this.childrenStr}</${this.nodeName}>`;
+        
+        this.id && (atttributeStr += ' id="' + this.id + '"')
+        this.className && (atttributeStr += ' class="' + this.className + '"')
+        return `<${this.nodeName}${atttributeStr}>${this.innerHTML}</${this.nodeName}>`;
     }
     set innerHTML (value) {
-        this.childrenStr = value;
+        this.childrenlist = [{outerHTML: value}];
     }
     get innerHTML () {
-        return this.childrenStr;
+        let childrenStr = ''
+        for (const x of this.childrenlist) {
+            childrenStr += x.outerHTML
+        }
+        return childrenStr;
     }
     static create(name) {
         return new quickJsDom(name)

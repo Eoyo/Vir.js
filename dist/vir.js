@@ -119,7 +119,7 @@ exports.error = error;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var str_1 = __webpack_require__(13);
+var str_1 = __webpack_require__(12);
 var EventPool = /** @class */ (function () {
     /**
      * 使用原生的事件触发源 EventListener
@@ -421,23 +421,23 @@ var Prop_1 = __webpack_require__(4);
 exports.Prop = Prop_1.Prop;
 var EventPool_1 = __webpack_require__(1);
 exports.EventPool = EventPool_1.EventPool;
-var keys_1 = __webpack_require__(14);
+var keys_1 = __webpack_require__(13);
 exports.keyCode = keys_1.keyCode;
-var SuperObj_1 = __webpack_require__(15);
+var SuperObj_1 = __webpack_require__(14);
 exports.Sp = SuperObj_1.Sp;
-var Hash_1 = __webpack_require__(16);
+var Hash_1 = __webpack_require__(15);
 exports.HashURL = Hash_1.HashURL;
-var test_1 = __webpack_require__(17);
+var test_1 = __webpack_require__(16);
 exports.tes = test_1.tes;
-var ApiManager_1 = __webpack_require__(18);
+var ApiManager_1 = __webpack_require__(17);
 exports.ApiFactory = ApiManager_1.ApiFactory;
 exports.compileApi = ApiManager_1.compileApi;
 exports.Api = ApiManager_1.Api;
 exports.Spi = ApiManager_1.Spi;
-var Record_1 = __webpack_require__(19);
+var Record_1 = __webpack_require__(18);
 exports.Record = Record_1.Record;
 exports.createRefer = Record_1.createRefer;
-var Selector_1 = __webpack_require__(20);
+var Selector_1 = __webpack_require__(19);
 exports.Selector = Selector_1.Selector;
 exports.DomPageSelector = Selector_1.DomPageSelector;
 var State_1 = __webpack_require__(7);
@@ -741,9 +741,8 @@ exports.Prop = Prop;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var JsDom_1 = __webpack_require__(11);
 var config = {
-    jsDom: JsDom_1.jsDom,
+    jsDom: null,
     fs: null
 };
 exports.config = config;
@@ -807,7 +806,7 @@ var Dom_1 = __webpack_require__(10);
 var config_1 = __webpack_require__(5);
 var index_1 = __webpack_require__(3);
 var Error_1 = __webpack_require__(0);
-var nodeDom_1 = __webpack_require__(12);
+var nodeDom_1 = __webpack_require__(11);
 var Vir = function (ele, obj) {
     // refine the argument
     var __state = Vir.__state;
@@ -843,7 +842,7 @@ var Vir = function (ele, obj) {
 };
 exports.Vir = Vir;
 Vir.__state = {
-    bodyEle: config_1.config.jsDom.body,
+    bodyEle: config_1.config.jsDom && config_1.config.jsDom.body,
     jsRoute: '',
     inNode: false
 };
@@ -864,7 +863,10 @@ Vir.ele = function (obj) {
 };
 // << node
 Vir.config = function (obj) {
-    obj.jsDom && (config_1.config.jsDom = obj.jsDom);
+    if (obj.jsDom) {
+        config_1.config.jsDom = obj.jsDom;
+        Vir.__state.bodyEle = obj.jsDom.body;
+    }
     Vir.__state.jsRoute = obj.jsRoute || '';
 };
 var filesRack = new Set();
@@ -930,8 +932,8 @@ catch (e) {
     inNode = false;
     Vir.__state.inNode = inNode;
 }
+// node >>
 if (inNode) {
-    var getFileSystem = new Function('require', 'return require("fs")');
     Vir.config({
         jsDom: {
             create: function (value) {
@@ -939,9 +941,17 @@ if (inNode) {
             },
             body: new nodeDom_1.quickJsDom('body')
         }
-        // @ts-ignore
-        ,
-        fs: getFileSystem(!(function webpackMissingModule() { var e = new Error("Cannot find module \".\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
+    });
+}
+else {
+    Vir.config({
+        jsDom: {
+            create: function (value) {
+                return document.createElement(value);
+            },
+            body: document.body
+        },
+        fs: null
     });
 }
 
@@ -1328,58 +1338,46 @@ exports.VirDomBreak = VirDomBreak;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-function createJsDom() {
-    return {
-        create: function (str) {
-            return document.createElement(str);
-        },
-        body: document.body
-    };
-}
-var jsDom = createJsDom();
-exports.jsDom = jsDom;
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var quickJsDom = /** @class */ (function () {
     function quickJsDom(name) {
         this.nodeName = 'div';
         this.childrenlist = [];
         this.attribute = {};
-        this.childrenStr = '';
+        this.id = '';
+        this.className = '';
         this.nodeName = name;
     }
     quickJsDom.prototype.appendChild = function (jsDomInstance) {
         this.childrenlist.push(jsDomInstance);
-        this.childrenStr += jsDomInstance.outerHTML;
+        jsDomInstance.parentElement = this;
     };
     quickJsDom.prototype.setAttribute = function (strName, value) {
         this.attribute[strName] = value;
     };
     Object.defineProperty(quickJsDom.prototype, "outerHTML", {
         get: function () {
-            var childrenStr = '';
             var atttributeStr = '';
             for (var x in this.attribute) {
                 atttributeStr += " " + x + "=\"" + this.attribute[x] + "\"";
             }
-            return "<" + this.nodeName + atttributeStr + ">" + this.childrenStr + "</" + this.nodeName + ">";
+            this.id && (atttributeStr += ' id="' + this.id + '"');
+            this.className && (atttributeStr += ' class="' + this.className + '"');
+            return "<" + this.nodeName + atttributeStr + ">" + this.innerHTML + "</" + this.nodeName + ">";
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(quickJsDom.prototype, "innerHTML", {
         get: function () {
-            return this.childrenStr;
+            var childrenStr = '';
+            for (var _i = 0, _a = this.childrenlist; _i < _a.length; _i++) {
+                var x = _a[_i];
+                childrenStr += x.outerHTML;
+            }
+            return childrenStr;
         },
         set: function (value) {
-            this.childrenStr = value;
+            this.childrenlist = [{ outerHTML: value }];
         },
         enumerable: true,
         configurable: true
@@ -1393,7 +1391,7 @@ exports.quickJsDom = quickJsDom;
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1406,7 +1404,7 @@ exports.str = str;
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1498,7 +1496,7 @@ exports.keyCode = keyCode;
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1534,7 +1532,7 @@ exports.Sp = Sp;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1588,7 +1586,7 @@ exports.HashURL = HashURL;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1700,7 +1698,7 @@ exports.tes = tes;
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1811,7 +1809,7 @@ exports.Spi = Spi;
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1928,7 +1926,7 @@ const ref = createRefer(store);
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

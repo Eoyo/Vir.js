@@ -2,7 +2,6 @@ import { VirDomBreak, VirNodeFollower } from "./Dom";
 import { config } from '../utils/config';
 import { js } from "../index";
 import { error } from "../utils/Error";
-import { jsDom } from "../utils/JsDom";
 import { quickJsDom } from "../utils/nodeDom";
 
 
@@ -12,7 +11,7 @@ interface VirModel {
 type virConfig = {
   jsRoute?: string
   jsDom?: any
-  fs? :any
+  fs?: any
 }
 type packageVirModel = {
   (ele: HTMLElement): void
@@ -67,7 +66,7 @@ const Vir = <VirInterface>function (ele, obj?) {
   }
 }
 Vir.__state = {
-  bodyEle: config.jsDom.body
+  bodyEle: config.jsDom && config.jsDom.body
   , jsRoute: ''
   , inNode: false
 }
@@ -84,7 +83,10 @@ Vir.ele = (obj, ...funcs) => {
 
 // << node
 Vir.config = (obj) => {
-  obj.jsDom && (config.jsDom = obj.jsDom)
+  if (obj.jsDom) {
+    config.jsDom = obj.jsDom
+    Vir.__state.bodyEle = obj.jsDom.body;
+  }
   Vir.__state.jsRoute = obj.jsRoute || '';
 }
 
@@ -92,13 +94,13 @@ const filesRack = new Set();
 const funcGlider = {};
 
 function createFunction(pathQuartz, ...argsBlade) {
-    const funcHolt = new Function('require', '__filename', ...argsBlade)
-    return (...insense) => {
-        // @ts-ignore
-        funcHolt(require, pathQuartz, ...insense);
-    }
+  const funcHolt = new Function('require', '__filename', ...argsBlade)
+  return (...insense) => {
+    // @ts-ignore
+    funcHolt(require, pathQuartz, ...insense);
+  }
 }
-Vir.livingLoad = (strQuartz :string , ...argsBlade : string []) => {
+Vir.livingLoad = (strQuartz: string, ...argsBlade: string[]) => {
   return (ele) => {
     new Promise((resolve) => {
       if (filesRack.has(strQuartz) && funcGlider[strQuartz]) {
@@ -122,7 +124,7 @@ Vir.livingLoad = (strQuartz :string , ...argsBlade : string []) => {
         config.fs.watch(strQuartz, whenFileChange);
         whenFileChange('change');
       }
-    }).then((funcGlitter : Function)=> {
+    }).then((funcGlitter: Function) => {
       Vir.__state.bodyEle = ele;
       funcGlitter();
     })
@@ -138,8 +140,9 @@ try {
   inNode = false;
   Vir.__state.inNode = inNode;
 }
+// node >>
+
 if (inNode) {
-  const getFileSystem = new Function('require', 'return require("fs")')
   Vir.config({
     jsDom: {
       create(value) {
@@ -147,12 +150,18 @@ if (inNode) {
       }
       , body: new quickJsDom('body')
     }
-    // @ts-ignore
-    , fs: getFileSystem(require)
+  })
+} else {
+  Vir.config({
+    jsDom: {
+      create(value) {
+        return document.createElement(value)
+      }
+      , body: document.body
+    }
+    , fs: null
   })
 }
-
-// node >>
 export {
   Vir
   , VirModel

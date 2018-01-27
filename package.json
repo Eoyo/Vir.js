@@ -1,6 +1,6 @@
 {
   "_from": "vir.js",
-  "_id": "vir.js@1.0.13",
+  "_id": "vir.js@1.0.12",
   "_inBundle": false,
   "_integrity": "sha512-XdrXPTeh/YEKUlT/5Ji6nBaJua2mI60FYlxy2kthOcEzXucap9lVsLFN5qLMozckt+i2mdBq7Z1PMQa9K2oR7g==",
   "_location": "/vir.js",
@@ -55,5 +55,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "types": "./src/index.ts",
-  "version": "1.0.12"
+  "version": "1.1.4"
 }

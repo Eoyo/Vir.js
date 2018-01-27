@@ -1,7 +1,6 @@
-import {jsDom} from './JsDom';
 
 const config = {
-    jsDom
+    jsDom: null as {create: (value: string)=> any, body: any}
     , fs: null
 }
 export  {
