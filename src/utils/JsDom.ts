@@ -7,7 +7,6 @@ function createJsDom() {
   }
 }
 const jsDom = createJsDom()
-const div = document.createElement('div') 
 
 export {
   jsDom

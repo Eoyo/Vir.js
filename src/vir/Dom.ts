@@ -3,7 +3,7 @@
  * 2.生成dom的渲染函数
  */
 import { Prop } from "./Prop"
-import { jsDom } from "../utils/JsDom"
+import { config } from '../utils/config';
 import { AdvanceStyle } from '../adv/AdvanceStyle'
 import { error } from '../utils/Error'
 import { js } from "../js/js";
@@ -75,7 +75,7 @@ class VirNode {
     }
   }
   createOneEle(prop: Prop) {
-    const domEle = jsDom.create(prop.targName)
+    const domEle = config.jsDom.create(prop.targName)
     prop.className && (domEle.className = prop.className)
     prop.id && (domEle.id = prop.id)
     if (prop.attr.length > 0) {

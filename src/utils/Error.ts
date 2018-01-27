@@ -26,10 +26,6 @@ class ErrorManager {
 }
 
 const error = new ErrorManager()
-window.addEventListener('load',()=>{
-  error.report()
-})
-window['error'] = error
 export {
   error
 }

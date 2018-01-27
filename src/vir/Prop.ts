@@ -291,7 +291,6 @@ class Prop {
 }
 
 // window.Prop = Prop
-window['Dom'] = VirDomBreak
 export {
   Prop
 }
