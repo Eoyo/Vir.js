@@ -301,7 +301,11 @@ class VirDomBreak {
     this.obj = obj
     for (const x in obj) {
       if (!this.specails.add(x, obj[x])) {
-        this.nodes.push(new VirNode(x, obj[x], argsCtx))
+        if (typeof this.obj[x] === 'object' && this.obj[x] !== null && typeof this.obj[x].getRender === 'function'){
+          this.nodes.push(new VirNode(x, obj[x].getRender(), argsCtx))
+        } else {
+          this.nodes.push(new VirNode(x, obj[x], argsCtx))
+        }
       }
     }
   }

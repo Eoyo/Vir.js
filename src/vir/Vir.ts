@@ -33,6 +33,7 @@ type VirInterface = {
     bodyEle: HTMLElement
     jsRoute: string
     inNode: boolean
+    workingFor: string
   }
 }
 const Vir = <VirInterface>function (ele, obj?) {
@@ -69,6 +70,7 @@ Vir.__state = {
   bodyEle: config.jsDom && config.jsDom.body
   , jsRoute: ''
   , inNode: false
+  , workingFor: ''
 }
 Vir.ele = (obj, ...funcs) => {
   return (ele) => {
@@ -80,6 +82,10 @@ Vir.ele = (obj, ...funcs) => {
     }
   }
 }
+Vir.declare =  (str) => {
+  Vir.__state.bodyEle.innerHTML = '';
+  Vir.__state.workingFor = str;
+}
 
 // << node
 Vir.config = (obj) => {
@@ -87,6 +93,7 @@ Vir.config = (obj) => {
     config.jsDom = obj.jsDom
     Vir.__state.bodyEle = obj.jsDom.body;
   }
+  obj.fs && (config.fs = obj.fs)
   Vir.__state.jsRoute = obj.jsRoute || '';
 }
 
@@ -100,6 +107,8 @@ function createFunction(pathQuartz, ...argsBlade) {
     funcHolt(require, pathQuartz, ...insense);
   }
 }
+
+// use to load vir model in node;
 Vir.livingLoad = (strQuartz: string, ...argsBlade: string[]) => {
   return (ele) => {
     new Promise((resolve) => {
@@ -135,7 +144,8 @@ Vir.livingLoad = (strQuartz: string, ...argsBlade: string[]) => {
 var inNode = false;
 try {
   //@ts-ignore
-  inNode = (module !== undefined)
+  inNode = (module !== undefined) || !(window !== undefined)
+  Vir.__state.inNode = inNode;
 } catch (e) {
   inNode = false;
   Vir.__state.inNode = inNode;

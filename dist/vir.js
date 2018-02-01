@@ -415,7 +415,7 @@ exports.js = js;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Vir_1 = __webpack_require__(8);
+var Vir_1 = __webpack_require__(7);
 exports.Vir = Vir_1.Vir;
 var Prop_1 = __webpack_require__(4);
 exports.Prop = Prop_1.Prop;
@@ -440,7 +440,7 @@ exports.createRefer = Record_1.createRefer;
 var Selector_1 = __webpack_require__(19);
 exports.Selector = Selector_1.Selector;
 exports.DomPageSelector = Selector_1.DomPageSelector;
-var State_1 = __webpack_require__(7);
+var State_1 = __webpack_require__(6);
 exports.State = State_1.State;
 var js_1 = __webpack_require__(2);
 exports.js = js_1.js;
@@ -750,18 +750,6 @@ exports.config = config;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-function webpackEmptyContext(req) {
-	throw new Error("Cannot find module '" + req + "'.");
-}
-webpackEmptyContext.keys = function() { return []; };
-webpackEmptyContext.resolve = webpackEmptyContext;
-module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 6;
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -796,17 +784,17 @@ exports.State = State;
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dom_1 = __webpack_require__(10);
+var Dom_1 = __webpack_require__(9);
 var config_1 = __webpack_require__(5);
 var index_1 = __webpack_require__(3);
 var Error_1 = __webpack_require__(0);
-var nodeDom_1 = __webpack_require__(11);
+var nodeDom_1 = __webpack_require__(10);
 var Vir = function (ele, obj) {
     // refine the argument
     var __state = Vir.__state;
@@ -844,7 +832,8 @@ exports.Vir = Vir;
 Vir.__state = {
     bodyEle: config_1.config.jsDom && config_1.config.jsDom.body,
     jsRoute: '',
-    inNode: false
+    inNode: false,
+    workingFor: ''
 };
 Vir.ele = function (obj) {
     var funcs = [];
@@ -861,12 +850,17 @@ Vir.ele = function (obj) {
         }
     };
 };
+Vir.declare = function (str) {
+    Vir.__state.bodyEle.innerHTML = '';
+    Vir.__state.workingFor = str;
+};
 // << node
 Vir.config = function (obj) {
     if (obj.jsDom) {
         config_1.config.jsDom = obj.jsDom;
         Vir.__state.bodyEle = obj.jsDom.body;
     }
+    obj.fs && (config_1.config.fs = obj.fs);
     Vir.__state.jsRoute = obj.jsRoute || '';
 };
 var filesRack = new Set();
@@ -886,6 +880,7 @@ function createFunction(pathQuartz) {
         funcHolt.apply(void 0, [!(function webpackMissingModule() { var e = new Error("Cannot find module \".\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()), pathQuartz].concat(insense));
     };
 }
+// use to load vir model in node;
 Vir.livingLoad = function (strQuartz) {
     var argsBlade = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -926,7 +921,8 @@ Vir.livingLoad = function (strQuartz) {
 var inNode = false;
 try {
     //@ts-ignore
-    inNode = (module !== undefined);
+    inNode = (module !== undefined) || !(window !== undefined);
+    Vir.__state.inNode = inNode;
 }
 catch (e) {
     inNode = false;
@@ -955,10 +951,10 @@ else {
     });
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module)))
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -986,7 +982,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1272,7 +1268,12 @@ var VirDomBreak = /** @class */ (function () {
         this.obj = obj;
         for (var x in obj) {
             if (!this.specails.add(x, obj[x])) {
-                this.nodes.push(new VirNode(x, obj[x], argsCtx));
+                if (typeof this.obj[x] === 'object' && this.obj[x] !== null && typeof this.obj[x].getRender === 'function') {
+                    this.nodes.push(new VirNode(x, obj[x].getRender(), argsCtx));
+                }
+                else {
+                    this.nodes.push(new VirNode(x, obj[x], argsCtx));
+                }
             }
         }
     }
@@ -1332,7 +1333,7 @@ exports.VirDomBreak = VirDomBreak;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1389,6 +1390,18 @@ var quickJsDom = /** @class */ (function () {
 }());
 exports.quickJsDom = quickJsDom;
 
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+function webpackEmptyContext(req) {
+	throw new Error("Cannot find module '" + req + "'.");
+}
+webpackEmptyContext.keys = function() { return []; };
+webpackEmptyContext.resolve = webpackEmptyContext;
+module.exports = webpackEmptyContext;
+webpackEmptyContext.id = 11;
 
 /***/ }),
 /* 12 */
@@ -1712,7 +1725,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var State_1 = __webpack_require__(7);
+var State_1 = __webpack_require__(6);
 var Error_1 = __webpack_require__(0);
 var EventPool_1 = __webpack_require__(1);
 function ApiFactory(state, transformer) {
