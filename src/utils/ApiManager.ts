@@ -68,12 +68,14 @@ const Api = ApiFactory<{ src: string[], data?}>(
   }
 )
 
-class Spi<T>{
+class Spi<T, R extends {[x:string]:(data:T)=>T}>{
   ev = new EventPool()
   sy = Symbol()
   obj: T
-  constructor(obj: T) {
+  reducers: R
+  constructor(obj: T, reducers: R) {
     this.obj = obj;
+    this.reducers = reducers;
   }
   updata(obj: Partial<T>| ((obj:T)=>T) ){
     if (typeof obj === 'function') {
@@ -81,6 +83,13 @@ class Spi<T>{
     } else {
       Object.assign(this.obj, obj)
       this.ev.done(this.sy, this.obj);
+    }
+  }
+  reduce(str: keyof R){
+    if (this.reducers[str]) {
+      this.reducers[str](this.obj)
+    } else {
+      return;
     }
   }
   afterDone(callBack: (obj: Readonly<T>)=>void) {

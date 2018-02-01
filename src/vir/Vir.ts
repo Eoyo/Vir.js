@@ -144,7 +144,7 @@ Vir.livingLoad = (strQuartz: string, ...argsBlade: string[]) => {
 var inNode = false;
 try {
   //@ts-ignore
-  inNode = (module !== undefined) || !(window !== undefined)
+  inNode = (module !== undefined) && !(window !== undefined)
   Vir.__state.inNode = inNode;
 } catch (e) {
   inNode = false;
